@@ -18,11 +18,11 @@ jobs:
       matrix:
         # The matrix will produce one jov for each configuration 
         # parameter type: arduino platform
-        arduino-platform: ["arduino:sand", "arduino:avr"]
+        arduino-platform: ["arduino:samd", "arduino:avr"]
         # we need to define Fully Qualified Board Name
         include:
           # when platform is "arduino:sand" the fqbn is "arduino:samd:nano_33_iot"
-          - arduino-platform: "arduino:sand"
+          - arduino-platform: "arduino:samd"
             fqnb: "arduino:samd:nano_33_iot"
           - arduino-platform: "arduino:avr"
             fqnb: "arduino:avr:unowifi"  
