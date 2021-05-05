@@ -46,7 +46,7 @@ jobs:
           arduino-cli core updater-index
           arduino-cli core install ${{ matrix.arduino-platform }}
       
-      - name: Build(Arduino)
+      - name: Build (Arduino)
         uses: arduino/compile-sketches@v1
         with:
           fqbn: ${{ matrix.fqnb}}
