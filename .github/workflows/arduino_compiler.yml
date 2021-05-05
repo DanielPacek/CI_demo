@@ -1,0 +1,57 @@
+# This is a basic workflow to help you get started with Actions
+
+name: arduino_compiler
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    strategy:
+      matrix:
+        # The matrix will produce one jov for each configuration 
+        # parameter type: arduino platform
+        arduino-platform: ["arduino:sand", "arduino:avr"]
+        # we need to define Fully Qualified Board Name
+        include:
+          # when platform is "arduino:sand" the fqbn is "arduino:samd:nano_33_iot"
+          - arduino-platform: "arduino:sand"
+            fqnb: "arduino:samd:nano_33_iot"
+          - arduino-platform: "arduino:avr"
+            fqnb: "arduino:avr:unowifi"  
+
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: checkout
+        uses: actions/checkout@v2
+
+      # setup arduino CLI
+      - name: setup arduino CLI
+        uses: arduino/setup-arduino-cli@v1.1.1
+
+      # install platform
+      - name: Install platform
+        run : |
+          arduino-cli core updater-index
+          arduino-cli core install ${{ matrix.arduino-platform }}
+      
+      - name: Build(Arduino)
+        uses: arduino/compile-sketches@v1
+        with:
+          fqbn: ${{ matrix.fqnb}}
+          sketch-paths: |
+            - ./
+          libraries: |
+            - source-path: ./
+            - name: Servo
