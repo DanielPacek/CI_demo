@@ -39,4 +39,3 @@ jobs:
       #  uses: matlab-actions/run-command@v0
       #  with:
       #    command: addpath('code'); results = runtests('IncludeSubfolders', true); assertSuccess(results);
-© 2021 GitHub, Inc.
