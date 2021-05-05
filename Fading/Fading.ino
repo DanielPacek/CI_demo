@@ -35,6 +35,6 @@ void loop() {
     // sets the value (range from 0 to 255):
     analogWrite(ledPin, fadeValue);
     // wait for 30 milliseconds to see the dimming effect
-    delay(30);
+    delay(40);
   }
 }
